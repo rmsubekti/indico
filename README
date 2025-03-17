@@ -1,0 +1,13 @@
+1. run postgre di docker
+```
+docker run --name indico -e POSTGRES_DB=indico -e  POSTGRES_PASSWORD=indico-00BC7ddAa54cpB -e POSTGRES_USER=indico -p 5432:5432 -d postgres
+```
+
+2. sesuaikan .env file (default port :2011)
+
+
+3. run golang
+
+```
+go run main.go
+```
