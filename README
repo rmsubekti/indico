@@ -11,3 +11,9 @@ docker run --name indico -e POSTGRES_DB=indico -e  POSTGRES_PASSWORD=indico-00BC
 ```
 go run main.go
 ```
+
+4. test lewat swagger
+
+```
+http://localhost:2011/docs/index.html
+```

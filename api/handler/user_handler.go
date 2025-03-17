@@ -19,6 +19,14 @@ func NewUserHandler(pg postgre.IPostgre) UserHandler {
 	return UserHandler{pg: pg}
 }
 
+// Login godoc
+// @Summary Login
+// @Description login user
+// @Tags         user
+// @Produce  json
+// @Param request body string true " Body payload message/rfc822" SchemaExample({\n\t"email": "email",\n\t"password": "passwrod"\n})
+// @Success 200 {object} utils.Claim
+// @Router /login [post]
 func (u *UserHandler) Login(c *gin.Context) {
 	var (
 		ulogin port.UserLogin
@@ -69,6 +77,14 @@ func (u *UserHandler) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, claim)
 }
 
+// Register godoc
+// @Summary Register
+// @Description register user
+// @Tags         user
+// @Produce  json
+// @Param request body string true " Body payload message/rfc822" SchemaExample({\n\t"name": "name",\n\t"email": "email",\n\t"password": "passwrod",\n\t"confirm_password": "passwrod",\n\t"user_role": "Admin|Staff"\n})
+// @Success 200 {string} success
+// @Router /register [post]
 func (u *UserHandler) Register(c *gin.Context) {
 	var (
 		ureg port.UserRegister
@@ -110,6 +126,13 @@ func (u *UserHandler) Register(c *gin.Context) {
 	)
 }
 
+// GetMe godoc
+// @Summary Get login info
+// @Tags         user
+// @Produce  json
+// @Success 200 {object} domain.User
+// @Router /users/me [get]
+// @Security Bearer
 func (u *UserHandler) GetMe(c *gin.Context) {
 	claim := c.MustGet("claim").(utils.Claim)
 	user := domain.User{ID: claim.ID}
@@ -136,6 +159,16 @@ func (u *UserHandler) GetMe(c *gin.Context) {
 	)
 }
 
+// List godoc
+// @Summary Get user list
+// @Tags         user
+// @Produce  json
+// @Success 200 {object} port.UserList
+// @Param        page    query    int  false  "show data on page n"
+// @Param        limit    query     int  false  "limit items per page"
+// @Param        search    query     string  false  "search  filter by name"
+// @Router /users [get]
+// @Security Bearer
 func (u *UserHandler) List(c *gin.Context) {
 	var users port.UserList
 	tx, _ := u.pg.Begin()

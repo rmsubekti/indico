@@ -1,0 +1,154 @@
+basePath: /
+definitions:
+  domain.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+      user_role:
+        $ref: '#/definitions/domain.UserRole'
+    type: object
+  domain.UserRole:
+    enum:
+    - Admin
+    - Staff
+    type: string
+    x-enum-varnames:
+    - UserAdmin
+    - UserStaff
+  port.UserList:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      rows:
+        items:
+          $ref: '#/definitions/domain.User'
+        type: array
+      search:
+        type: string
+      sort:
+        type: string
+      total_page:
+        type: integer
+      total_rows:
+        type: integer
+    type: object
+  utils.Claim:
+    properties:
+      expire_days:
+        type: number
+      id:
+        type: integer
+      role:
+        type: string
+      token:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Login to create token.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: INDICO Service
+  version: "1.0"
+paths:
+  /login:
+    post:
+      description: login user
+      parameters:
+      - description: ' Body payload message/rfc822'
+        in: body
+        name: request
+        required: true
+        schema:
+          example: "{\n\t\"email\": \"email\",\n\t\"password\": \"passwrod\"\n}"
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.Claim'
+      summary: Login
+      tags:
+      - user
+  /register:
+    post:
+      description: register user
+      parameters:
+      - description: ' Body payload message/rfc822'
+        in: body
+        name: request
+        required: true
+        schema:
+          example: "{\n\t\"name\": \"name\",\n\t\"email\": \"email\",\n\t\"password\":
+            \"passwrod\",\n\t\"confirm_password\": \"passwrod\",\n\t\"user_role\":
+            \"Admin|Staff\"\n}"
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Register
+      tags:
+      - user
+  /users:
+    get:
+      parameters:
+      - description: show data on page n
+        in: query
+        name: page
+        type: integer
+      - description: limit items per page
+        in: query
+        name: limit
+        type: integer
+      - description: search  filter by name
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/port.UserList'
+      security:
+      - Bearer: []
+      summary: Get user list
+      tags:
+      - user
+  /users/me:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.User'
+      security:
+      - Bearer: []
+      summary: Get login info
+      tags:
+      - user
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
