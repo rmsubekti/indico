@@ -36,8 +36,8 @@ create table if not exists stock (
 
 create table if not exists "order" (
     id serial primary key,
-    from_warehouse_id int,
-    to_warehouse_id int,
+    from_warehouse_id int references warehouse(id),
+    to_warehouse_id int references warehouse(id),
     "type" varchar(8) not null,
     "status" varchar(20) not null,
     "note" varchar(200) not null,
