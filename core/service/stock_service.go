@@ -33,7 +33,7 @@ func (s *stockService) Update(ctx context.Context, productID, waID uint, qty int
 		}
 	} else {
 		if (int(stock.Quantity) + qty) < 1 {
-			return errors.New("kuantitas harus lebih besar dari nol")
+			return errors.New("kuantitas stok harus lebih besar dari nol")
 		}
 		stock.Quantity += uint(qty)
 		if err = s.repo.UpdateQty(ctx, stock.ID, stock.Quantity); err != nil {

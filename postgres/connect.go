@@ -46,9 +46,7 @@ func NewPostgre(dsn string) IPostgre {
 	if err != nil {
 		log.Panic("cannot connect to database")
 	}
-	if err = executeFiles(pg.db, "migration/function"); err != nil {
-		log.Panicf("cannot create db function error : %v", err)
-	}
+
 	return &pg
 }
 

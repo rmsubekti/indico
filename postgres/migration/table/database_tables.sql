@@ -13,7 +13,7 @@ create table if not exists product (
     qty int not null,
     created_at timestamptz not null default now(),
     updated_at timestamptz,
-    created_at timestamptz    
+    deleted_at timestamptz    
 );
 
 create table if not exists warehouse (
@@ -34,7 +34,7 @@ create table if not exists stock (
     references product(id)
 );
 
-create table if not exists order (
+create table if not exists "order" (
     id serial primary key,
     from_warehouse_id int,
     to_warehouse_id int,
@@ -43,7 +43,7 @@ create table if not exists order (
     "note" varchar(200) not null,
     created_at timestamptz not null default now(),
     updated_at timestamptz,
-    created_at timestamptz
+    deleted_at timestamptz
 );
 
 create table if not exists order_detail (
@@ -52,7 +52,7 @@ create table if not exists order_detail (
     product_id int not null,
     quantity int not null,
     constraint fk_order_detail foreign key (order_id) 
-    references order(id),
+    references "order"(id),
     constraint fk_product_order foreign key (product_id) 
     references product(id)
 );

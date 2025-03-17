@@ -43,3 +43,7 @@ func (w *warehouseService) List(ctx context.Context, in *port.WarehouseList) (er
 	}
 	return
 }
+
+func (w *warehouseService) GetByID(ctx context.Context, id uint) (out domain.Warehouse, err error) {
+	return w.repo.GetByID(ctx, id)
+}

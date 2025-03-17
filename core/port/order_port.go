@@ -19,11 +19,13 @@ type (
 		List(ctx context.Context, in *OrderList) error
 	}
 	IOrderService interface {
+		WithWarehouseService(whServ IWarehouseService) IOrderService
+		WithProductService(prodServ IProductService) IOrderService
 		WithOrderDetailService(detServ IOrderDetailService) IOrderService
 		WithStockService(stockServ IStockService) IOrderService
 		Add(ctx context.Context, in *domain.Order) error
 		ChangeStatus(ctx context.Context, orderID uint, status domain.OrderStatus) error
-		Get(ctx context.Context, in *domain.Order) error
+		GetByID(ctx context.Context, id uint) (domain.Order, error)
 		Update(ctx context.Context, in *domain.Order) error
 		List(ctx context.Context, in *OrderList) error
 	}

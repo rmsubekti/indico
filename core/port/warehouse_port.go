@@ -16,9 +16,11 @@ type (
 		Add(ctx context.Context, in *domain.Warehouse) error
 		GetTotalRow(ctx context.Context, in *WarehouseList) error
 		List(ctx context.Context, in *WarehouseList) error
+		GetByID(ctx context.Context, id uint) (domain.Warehouse, error)
 	}
 	IWarehouseService interface {
 		Add(ctx context.Context, in *domain.Warehouse) error
 		List(ctx context.Context, in *WarehouseList) error
+		GetByID(ctx context.Context, id uint) (domain.Warehouse, error)
 	}
 )

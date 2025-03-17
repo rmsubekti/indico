@@ -58,3 +58,10 @@ func (w *WarehouseRepo) List(ctx context.Context, in *port.WarehouseList) (err e
 	in.Rows = &warehouses
 	return
 }
+
+func (w *WarehouseRepo) GetByID(ctx context.Context, id uint) (out domain.Warehouse, err error) {
+	err = w.Tx.QueryRowContext(ctx, `
+		select id, name, address, capacity from warehouse where id = $1 limit 1
+	`, id).Scan(&out.ID, &out.Name, &out.Address, &out.Capacity)
+	return
+}

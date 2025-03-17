@@ -18,6 +18,9 @@ type (
 		UserRepo() port.IUserRepo
 		WarehouseRepo() port.IWarehouseRepo
 		ProductRepo() port.IProductRepo
+		StockRepo() port.IStockRepo
+		OrderRepo() port.IOrderRepo
+		OrderDetailRepo() port.IOrderDetailRepo
 	}
 )
 
@@ -41,4 +44,16 @@ func (tx transaction) WarehouseRepo() port.IWarehouseRepo {
 
 func (tx transaction) ProductRepo() port.IProductRepo {
 	return &repo.ProductRepo{Tx: tx.tx}
+}
+
+func (tx transaction) StockRepo() port.IStockRepo {
+	return &repo.StockRepo{Tx: tx.tx}
+}
+
+func (tx transaction) OrderRepo() port.IOrderRepo {
+	return &repo.OrderRepo{Tx: tx.tx}
+}
+
+func (tx transaction) OrderDetailRepo() port.IOrderDetailRepo {
+	return &repo.OrderDetailRepo{Tx: tx.tx}
 }

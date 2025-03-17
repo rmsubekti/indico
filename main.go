@@ -18,6 +18,9 @@ func main() {
 
 	r := gin.New()
 	routes.UserRoutes(r, pg)
-	r.Run(":8080")
+	routes.ProductRoutes(r, pg)
+	routes.LocationRoutes(r, pg)
+	routes.OrderRoutes(r, pg)
+	r.Run(":" + config.APP.PORT)
 
 }
