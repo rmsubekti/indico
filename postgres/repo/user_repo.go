@@ -29,7 +29,7 @@ func (u *UserRepo) GetByEmail(ctx context.Context, email string) (out domain.Use
 
 func (u *UserRepo) GetByID(ctx context.Context, uid uint) (out domain.User, err error) {
 	err = u.Tx.QueryRowContext(ctx, `
-		select id, name, email, pass from user where email = $1 limit 1
+		select id, name, email, pass from user where id = $1 limit 1
 	`, uid).Scan(&out.ID, &out.Name, &out.Email, &out.Password, &out.UserRole)
 	return
 }
